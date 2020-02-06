@@ -15,11 +15,14 @@ A simple Makefile might look like this:
 hello:
 	echo "Hello world!"
 	echo "This computer is running: "
-	uname -a
+	uname -sm
 ```
 It's surprisingly simple, isn't it? The build system simply runs several commands in succession to achieve a given objective.
 
 It's worth noting that you must use *tabs* and not spaces.
+
+### Exercise 1
+Try it yourself: Complete the [Makefile](../exercise1/Makefile) ([solution](../solution1/Makefile)) by defining the `hello` target.
 
 ## Targets
 
@@ -28,12 +31,31 @@ The objective of a build system is to build something. Let's change the definiti
 hello:
 	echo "Hello world!"
 	echo "This computer is running: "
-	uname -a
+	uname -sm
 	touch hello
 ```
 Run `make hello` — notice that a new file has appeared.
+```shell
+$ tree
+.
+├── Makefile
+└── hello
+```
 
-If you run `make` again, nothing happens. That's because the target has already been built, and its dependencies (nothing) have not changed since it was last built.
+If you run `make hello` again, nothing happens. That's because the target has already been built, and its dependencies (nothing) have not changed since it was last built.
+```shell
+make: `hello' is up to date.
+```
+
+It is generally good practice to include a 'clean' rule which cleans up any output of the build process.
+```Makefile
+.PHONY: clean
+clean:
+    rm hello
+```
+
+### Exercise 2
+Try it yourself: Complete the [Makefile](../exercise2/Makefile) ([solution](../solution2/Makefile)) with a rule that creates the 'hello' file and a clean rule that removes it.
 
 ## Dependencies I
 
