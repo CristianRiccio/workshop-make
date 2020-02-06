@@ -1,5 +1,3 @@
-[[This is template content]]
+Help!
 
-This file is optional. Delete it if you wish.
-
-This section should feature common questions and answers that arise when presenting this workshop. This is for use by both demonstrators and attendees.
+That's what we're all here to do: help each other. Just reach out to a friendly demonstrator.
