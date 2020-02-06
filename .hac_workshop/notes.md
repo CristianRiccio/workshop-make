@@ -11,11 +11,11 @@ Diagram: A C source file is compiled into a binary object file.
 ## Commands
 
 A simple Makefile might look like this:
-```
-    hello:
-    	echo "Hello world!"
-    	echo "This computer is running: "
-    	uname -a
+```Makefile
+hello:
+	echo "Hello world!"
+	echo "This computer is running: "
+	uname -a
 ```
 It's surprisingly simple, isn't it? The build system simply runs several commands in succession to achieve a given objective.
 
@@ -24,12 +24,12 @@ It's worth noting that you must use *tabs* and not spaces.
 ## Targets
 
 The objective of a build system is to build something. Let's change the definition of the target `hello` and see what happens:
-```
-    hello:
-    	echo "Hello world!"
-    	echo "This computer is running: "
-    	uname -a
-    	touch hello
+```Makefile
+hello:
+	echo "Hello world!"
+	echo "This computer is running: "
+	uname -a
+	touch hello
 ```
 Run `make hello` — notice that a new file has appeared.
 
@@ -38,10 +38,10 @@ If you run `make` again, nothing happens. That's because the target has already 
 ## Dependencies I
 
 Let's define `everythingworkplease` in terms of the source file `everything.c`.
-```
-    everythingworkplease: everything.c
-    	echo "Building everythingworkplease..."
-    	gcc -o everythingworkplease everything.c
+```Makefile
+everythingworkplease: everything.c
+	echo "Building everythingworkplease..."
+	gcc -o everythingworkplease everything.c
 ```
 Run the executable.
 
@@ -57,25 +57,25 @@ When `make` is run a second time, it notices that the dependency's modified-time
 ## Pattern matching
 
 Suppose we have a bunch of source files:
-```
-    tree .
-    |-- a.c
-    |-- b.c
-    |-- c.c
+```Makefile
+tree .
+|-- a.c
+|-- b.c
+|-- c.c
 ```
 We can define a simple `.o` target by using a pattern:
-```
-    %.o: %.c
-    	gcc -o $@ -c $1
+```Makefile
+%.o: %.c
+	gcc -o $@ -c $1
 ```
 Run `make`, and watch it automatically build the object files from source files.
 
 ## Variables and Build flags
 
 Variables allow flexible builds
-```
-    debug: CFLAGS+=-g
-    debug: CFLAGS+=-O0
-    debug: a.o b.o
-    	gcc $(LFLAGS) -o $@ $<
+```Makefile
+debug: CFLAGS+=-g
+debug: CFLAGS+=-O0
+debug: a.o b.o
+	gcc $(LFLAGS) -o $@ $<
 ```
