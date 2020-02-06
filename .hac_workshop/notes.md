@@ -62,19 +62,38 @@ Try it yourself: Complete the [Makefile](../exercise2/Makefile) ([solution](../s
 Let's define `everythingworkplease` in terms of the source file `everything.c`.
 ```Makefile
 everythingworkplease: everything.c
-	echo "Building everythingworkplease..."
+	$(info Building everythingworkplease...)
 	gcc -o everythingworkplease everything.c
 ```
-Run the executable.
+Build and run `everythingworkplease`.
+```shell
+$ make everythingworkplease && ./everythingworkplease
+Building everythingworkplease...
+gcc -o everythingworkplease everything.c
+Everything (version 1) worked!
+```
 
 Notice that if you run `make` again, nothing happens.
 
 Change the `VERSION_NUMBER` in `everything.c` and run `make` again.
+```shell
+$ make everythingworkplease && ./everythingworkplease
+Building everythingworkplease...
+gcc -o everythingworkplease everything.c
+Everything (version 2) worked!
+```
 
-When `make` is run a second time, it notices that the dependency's modified-time is later than the target's modified-time, and. Make will automatically rebuild the target.
+When `make` is run a second time, it notices that the dependency's modified-time is later than the target's modified-time, and `make` will automatically rebuild the target.
+
+### Exercise 3
+Try it yourself: Complete the [Makefile](../exercise3/Makefile) ([solution](../solution3/Makefile)) with rules that:
+- define a target `everythingworkplease`
+- which depends on `everything.c`
+- and compiles it with gcc.
 
 ## Dependencies II
 
+If your project has plenty of files, like most projects do, Make handles a lot of the complexity for us.
 
 ## Pattern matching
 
