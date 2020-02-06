@@ -173,10 +173,28 @@ Try it yourself: Write a simple rule to build all object (`%.o`) files from thei
 
 ## Variables
 
-Variables make it incredibly easy to configure your application:
+Variables make it incredibly easy to configure your application.
+
+For instance we can consolidate the list of objects in a single variable, and use it anywhere:
 ```Makefile
-debug: CFLAGS+=-g
-debug: CFLAGS+=-O0
-debug: a.o b.o
-	gcc $(LFLAGS) -o $@ $<
+C_OBJS:=everything.o this.o that.o thing.o
+
+everythingworkplease: $(C_OBJS)
+	$(info Building everythingworkplease...)
+	gcc -o $@ $^
 ```
+
+Variables are also useful for creating specifying compiler flags and options, like when creating a debug build:
+```Makefile
+CFLAGS:=
+
+debug: CFLAGS+=-g -O0 -DDEBUG
+debug: $(C_OBJS)
+	gcc -o $@ $^
+
+%.o: %.c thing.h
+	gcc $(CFLAGS) -o $@ -c $<
+```
+
+### Exercise 6
+Try it yourself: Write a simple rule to build all object (`%.o`) files from their source (`%.c`) files and their global dependencies (`thing.h`) in [Makefile](../exercise6/Makefile) ([solution](../solution6/Makefile)).
