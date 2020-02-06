@@ -1,3 +1,11 @@
+# Introduction to Make
+
+# Introduction
+
+Beginner and experienced developers alike want to build cool applications, tools, and products. A build system is helps to manage the compile and linking process when preparing to test or distribute your code.
+
+Let's get started! Notes are [here](.hac_workshop/notes.md)
+
 This is a template for a Hackers at Cambridge workshop repository.
 To get started making a workshop, clone this repository to `workshop-make` (e.g. `workshop-intro-to-rust`).
 
