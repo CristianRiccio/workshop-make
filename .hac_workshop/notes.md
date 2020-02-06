@@ -6,6 +6,8 @@ Beginner and experienced developers alike want to build cool applications, tools
 
 Diagram: A C source file is compiled into a binary object file.
 
+Useful Make cheatsheet: https://devhints.io/makefile
+
 # Concepts
 
 ## Commands
@@ -94,20 +96,64 @@ Try it yourself: Complete the [Makefile](../exercise3/Makefile) ([solution](../s
 ## Dependencies II
 
 If your project has plenty of files, like most projects do, Make handles a lot of the complexity for us.
+```shell
+.
+├── Makefile
+├── everything.c
+├── that.c
+├── that.h
+├── thing.c
+├── thing.h
+├── this.c
+└── this.h
+```
+
+We can define a simple Makefile to capture all the dependencies:
+```Makefile
+everythingworkplease: everything.o this.o that.o thing.o
+	$(info Building everythingworkplease...)
+	gcc -o $@ $^
+
+everything.o: everything.c
+	gcc -o $@ -c $<
+
+this.o: this.c this.h thing.h
+	gcc -o $@ -c $<
+
+that.o: that.c that.h thing.h
+	gcc -o $@ -c $<
+
+thing.o: thing.c thing.h
+	gcc -o $@ -c $<
+```
+
+Automatic variables help us be more concise: `$@` expands to the target, `$<` is the first dependency, and `$^` all dependencies.
+
+List of useful automatic variables: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
+
+### Exercise 4
+Try it yourself: Fill in the dependencies for each target in [Makefile](../exercise4/Makefile) ([solution](../solution4/Makefile)).
 
 ## Pattern matching
-
-Suppose we have a bunch of source files:
-```Makefile
-tree .
-|-- a.c
-|-- b.c
-|-- c.c
+We've got a pretty big project on our hands right now.
+```shell
+.
+├── Makefile
+├── everything.c
+├── that.c
+├── that.h
+├── thing.c
+├── thing.h
+├── this.c
+└── this.h
 ```
+
+With this many files, we could take advantage of a feature called pattern matching.
+
 We can define a simple `.o` target by using a pattern:
 ```Makefile
 %.o: %.c
-	gcc -o $@ -c $1
+	gcc -o $@ -c $<
 ```
 Run `make`, and watch it automatically build the object files from source files.
 
