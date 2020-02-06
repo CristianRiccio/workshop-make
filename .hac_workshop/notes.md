@@ -131,6 +131,17 @@ Automatic variables help us be more concise: `$@` expands to the target, `$<` is
 
 List of useful automatic variables: https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html
 
+Make will automatically figure out what to recompile (and in what order):
+```shell
+$ make everythingworkplease
+gcc -o everything.o -c everything.c
+gcc -o this.o -c this.c
+gcc -o that.o -c that.c
+gcc -o thing.o -c thing.c
+Building everythingworkplease...
+gcc -o everythingworkplease everything.o this.o that.o thing.o
+```
+
 ### Exercise 4
 Try it yourself: Fill in the dependencies for each target in [Makefile](../exercise4/Makefile) ([solution](../solution4/Makefile)).
 
@@ -150,16 +161,19 @@ We've got a pretty big project on our hands right now.
 
 With this many files, we could take advantage of a feature called pattern matching.
 
-We can define a simple `.o` target by using a pattern:
+We can define a simple `%.o` target by using a pattern:
 ```Makefile
-%.o: %.c
+%.o: %.c thing.h
 	gcc -o $@ -c $<
 ```
 Run `make`, and watch it automatically build the object files from source files.
 
-## Variables and Build flags
+### Exercise 5
+Try it yourself: Write a simple rule to build all object (`%.o`) files from their source (`%.c`) files and their global dependencies (`thing.h`) in [Makefile](../exercise5/Makefile) ([solution](../solution5/Makefile)).
 
-Variables allow flexible builds
+## Variables
+
+Variables make it incredibly easy to configure your application:
 ```Makefile
 debug: CFLAGS+=-g
 debug: CFLAGS+=-O0
